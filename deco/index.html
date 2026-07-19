@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DecorsDeluxe Shopping Survey</title>
+
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --muted:#666;
+      --text:#111;
+      --border:#ddd;
+      --focus:#111;
+      --danger:#d32f2f;
+      --radius:14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height:1.4;
+    }
+
+    .survey-container {
+      max-width: 720px;
+      margin: 24px auto;
+      padding: 24px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    .survey-container h2 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .survey-container p {
+      margin: 0 0 26px 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .question {
+      margin-bottom: 22px;
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .question-label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 650;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 14px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fff;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 15px;
+      color: #222;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #fafafa;
+      transition: background 0.12s;
+    }
+
+    .radio-label:hover {
+      background: #f6f6f6;
+    }
+
+    .radio-label input[type="radio"] {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #111;
+      flex: 0 0 auto;
+    }
+
+    .stars-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .star-btn {
+      padding: 10px 12px;
+      border: 2px solid rgba(0,0,0,0.12);
+      background: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 20px;
+      transition: transform 0.12s, border-color 0.12s, background 0.12s;
+      min-width: 72px;
+      text-align:center;
+    }
+
+    .star-btn:hover {
+      border-color: #111;
+      transform: translateY(-1px);
+    }
+
+    .star-btn.selected {
+      border-color: #111;
+      background: #f3f3f3;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 650;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: transform 0.12s, opacity 0.12s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .thankyou-screen {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .thankyou-screen h2 {
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .thankyou-screen p {
+      text-align: center;
+    }
+
+    .discount-box {
+      margin: 24px auto;
+      padding: 18px 24px;
+      border: 2px dashed #111;
+      border-radius: 12px;
+      background: #f9f9f9;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .discount-code {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #111;
+    }
+
+    .copy-btn {
+      padding: 8px 16px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.12s, opacity 0.12s;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .shop-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 32px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 650;
+      text-decoration: none;
+      transition: transform 0.12s, opacity 0.12s;
+    }
+
+    .shop-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .small-text {
+      margin-top: 16px !important;
+      font-size: 13px !important;
+      color: #888 !important;
+    }
+
+    @media (max-width: 520px){
+      .survey-container{
+        margin: 14px;
+        padding: 18px;
+      }
+      .survey-container h2{
+        font-size: 20px;
+      }
+      .question{
+        padding: 14px;
+      }
+      .star-btn{
+        flex: 1 1 calc(50% - 10px);
+        min-width: 0;
+      }
+      .discount-box {
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px;
+      }
+      .discount-code {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="survey-container">
+    <div id="surveySection">
+      <h2>Help us improve your shopping experience</h2>
+      <p>Answer 5 quick questions (takes less than 1 minute) and receive a $25 discount code.</p>
+
+      <form id="surveyForm">
+        <div class="question">
+          <label class="question-label">Q1. What's your name?</label>
+          <input type="text" class="text-input" name="name" placeholder="Please enter your name" required>
+          <div class="error-message" id="nameError">Please enter your name</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">Q2. What matters most to you when shopping online?</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="matters" value="Price & deals" required> Price & deals
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="matters" value="Product quality"> Product quality
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="matters" value="Fast shipping"> Fast shipping
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="matters" value="Easy returns"> Easy returns
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="matters" value="Unique / trending designs"> Unique / trending designs
+            </label>
+          </div>
+          <div class="error-message" id="mattersError">Please select an option</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">Q3. How do you usually discover new brands?</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="discover" value="Social media (Instagram, TikTok)" required> Social media (Instagram, TikTok)
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="discover" value="Google search"> Google search
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="discover" value="Ads"> Ads
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="discover" value="Word of mouth"> Word of mouth
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="discover" value="Online reviews"> Online reviews
+            </label>
+          </div>
+          <div class="error-message" id="discoverError">Please select an option</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">Q4. What would make you try a new online store?</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="trystore" value="Discount on first order" required> Discount on first order
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="trystore" value="Free shipping"> Free shipping
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="trystore" value="Strong customer reviews"> Strong customer reviews
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="trystore" value="Appealing product photos"> Appealing product photos
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="trystore" value="Clear return policy"> Clear return policy
+            </label>
+          </div>
+          <div class="error-message" id="trystoreError">Please select an option</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">Q5. How would you rate this survey experience?</label>
+          <div class="stars-group" id="starsGroup">
+            <button type="button" class="star-btn" data-stars="5" aria-label="5 stars">⭐⭐⭐⭐⭐</button>
+            <button type="button" class="star-btn" data-stars="4" aria-label="4 stars">⭐⭐⭐⭐</button>
+            <button type="button" class="star-btn" data-stars="3" aria-label="3 stars">⭐⭐⭐</button>
+            <button type="button" class="star-btn" data-stars="2" aria-label="2 stars">⭐⭐</button>
+            <button type="button" class="star-btn" data-stars="1" aria-label="1 star">⭐</button>
+          </div>
+          <input type="hidden" name="stars" id="starsInput" required>
+          <div class="error-message" id="starsError">Please select a rating</div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+                </div>
+
+    <div class="thankyou-screen" id="thankyouScreen">
+      <h2>Thank you for your feedback!</h2>
+      <p>Here is your $25 discount code:</p>
+      <div class="discount-box">
+        <span class="discount-code" id="codeDisplay">25OFFDDELUXE</span>
+        <button class="copy-btn" id="copyBtn">Copy</button>
+      </div>
+      <br>
+      <a href="https://decorsdeluxe.com" class="shop-btn" target="_blank" rel="noopener">Shop now at DecorsDeluxe.com</a>
+      <p class="small-text">Use this code at checkout to get $25 off your order. Free shipping included.</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var surveySection = document.getElementById('surveySection');
+      var thankyouScreen = document.getElementById('thankyouScreen');
+      var form = document.getElementById('surveyForm');
+      var submitBtn = form.querySelector('.submit-btn');
+      var starsGroup = document.getElementById('starsGroup');
+      var starsInput = document.getElementById('starsInput');
+      var copyBtn = document.getElementById('copyBtn');
+
+      if (localStorage.getItem('deco_survey_completed') === 'true') {
+        surveySection.style.display = 'none';
+        thankyouScreen.style.display = 'block';
+        return;
+      }
+
+      starsGroup.addEventListener('click', function(e) {
+        var btn = e.target.closest('.star-btn');
+        if (!btn) return;
+        starsGroup.querySelectorAll('.star-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        starsInput.value = btn.dataset.stars;
+        document.getElementById('starsError').style.display = 'none';
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var isValid = true;
+        var name = form.querySelector('input[name="name"]').value.trim();
+        var matters = form.querySelector('input[name="matters"]:checked');
+        var discover = form.querySelector('input[name="discover"]:checked');
+        var trystore = form.querySelector('input[name="trystore"]:checked');
+        var stars = starsInput.value;
+
+        if (!name) {
+          document.getElementById('nameError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('nameError').style.display = 'none';
+        }
+
+        if (!matters) {
+          document.getElementById('mattersError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('mattersError').style.display = 'none';
+        }
+
+        if (!discover) {
+          document.getElementById('discoverError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('discoverError').style.display = 'none';
+        }
+
+        if (!trystore) {
+          document.getElementById('trystoreError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('trystoreError').style.display = 'none';
+        }
+
+        if (!stars) {
+          document.getElementById('starsError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('starsError').style.display = 'none';
+        }
+
+        if (!isValid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        var starRating = parseInt(stars, 10);
+
+        localStorage.setItem('deco_survey_completed', 'true');
+        localStorage.setItem('deco_star_rating', String(starRating));
+
+        if (starRating >= 3) {
+          window.location.href = 'https://www.trustpilot.com/evaluate/decorsdeluxe.com';
+        } else {
+          surveySection.style.display = 'none';
+          thankyouScreen.style.display = 'block';
+        }
+      });
+
+      copyBtn.addEventListener('click', function() {
+        var code = document.getElementById('codeDisplay').textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(function() {
+            copyBtn.textContent = 'Copied!';
+            setTimeout(function() { copyBtn.textContent = 'Copy'; }, 2000);
+          });
+        } else {
+          var ta = document.createElement('textarea');
+          ta.value = code;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          copyBtn.textContent = 'Copied!';
+          setTimeout(function() { copyBtn.textContent = 'Copy'; }, 2000);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
