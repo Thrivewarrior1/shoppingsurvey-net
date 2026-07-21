@@ -103,13 +103,13 @@
       if (typeof fbq === 'function') {
         fbq('track', 'CompleteRegistration');
       }
-      fetch('https://hook.eu1.make.com/nrjcwvu9vdy22gx5xovd9316qmu8qeyi', {
+      var pixelDelay = new Promise(function(r) { setTimeout(r, 1500); });
+      var webhookDone = fetch('https://hook.eu1.make.com/nrjcwvu9vdy22gx5xovd9316qmu8qeyi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name, email: email })
-      }).then(function() {
-        window.location.href = 'https://www.trustpilot.com/evaluate/decorsdeluxe.com';
-      }).catch(function() {
+      }).catch(function() {});
+      Promise.all([pixelDelay, webhookDone]).then(function() {
         window.location.href = 'https://www.trustpilot.com/evaluate/decorsdeluxe.com';
       });
     } else {
