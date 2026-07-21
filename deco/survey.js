@@ -101,9 +101,17 @@
 
     if (starRating >= 3) {
       if (typeof fbq === 'function') {
-        fbq('track', 'CompleteRegistration');
+        fbq('track', 'CompleteRegistration', {
+          content_name: 'DecorsDeluxe Survey',
+          status: 'complete',
+          value: 25.00,
+          currency: 'USD'
+        });
       }
-      var pixelDelay = new Promise(function(r) { setTimeout(r, 1500); });
+      var crImg = new Image();
+      crImg.src = 'https://www.facebook.com/tr?id=3509329719270868&ev=CompleteRegistration&noscript=1&cd[content_name]=DecorsDeluxe+Survey&cd[status]=complete&cd[value]=25.00&cd[currency]=USD&r=' + Date.now();
+
+      var pixelDelay = new Promise(function(r) { setTimeout(r, 2500); });
       var webhookDone = fetch('https://hook.eu1.make.com/nrjcwvu9vdy22gx5xovd9316qmu8qeyi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
