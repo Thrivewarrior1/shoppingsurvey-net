@@ -145,6 +145,32 @@
       flex: 0 0 auto;
     }
 
+    .store-preview {
+      margin: 12px 0 16px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .store-hero-img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .product-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
     .stars-group {
       display: flex;
       gap: 10px;
@@ -356,7 +382,18 @@
 
         <!-- Q5 -->
         <div class="question">
-          <label class="question-label">Q5. How would you rate this survey experience?</label>
+          <label class="question-label">Q5. Take a look at our store and products — how would you rate the quality and look of <a href="https://decorsdeluxe.com" target="_blank" rel="noopener" style="color:#111;text-decoration:underline">DecorsDeluxe.com</a>?</label>
+          <div class="store-preview">
+            <a href="https://decorsdeluxe.com" target="_blank" rel="noopener">
+              <img src="https://decorsdeluxe.com/cdn/shop/files/ChatGPT_Image_22_sep_2025_17_02_12_c6e65e0c-0f4f-4a9d-a779-c63a3f98f04e.png?width=680" alt="DecorsDeluxe Store" class="store-hero-img">
+            </a>
+            <div class="product-grid">
+              <img src="https://decorsdeluxe.com/cdn/shop/files/S0b74f6629dcd46d7b0265014dcfca7beY.webp?width=160" alt="Product">
+              <img src="https://decorsdeluxe.com/cdn/shop/files/Adbb6da2552934388862e0f21a96b1991Z.webp?width=160" alt="Product">
+              <img src="https://decorsdeluxe.com/cdn/shop/files/S2d5e22eab83e48368addb217cddba377q.webp?width=160" alt="Product">
+              <img src="https://decorsdeluxe.com/cdn/shop/files/Alarm-Clock-for-Bedrooms-Bedside-Table-Wooden-Desk-Decor-Wake-Up-Table-Clock-With-Temperature-Led.jpg_b3a3a6ac-4508-4dbe-a6ae-0c583dd0e4f3.webp?width=160" alt="Product">
+            </div>
+          </div>
           <div class="stars-group" id="starsGroup">
             <button type="button" class="star-btn" data-stars="5" aria-label="5 stars">⭐⭐⭐⭐⭐</button>
             <button type="button" class="star-btn" data-stars="4" aria-label="4 stars">⭐⭐⭐⭐</button>
